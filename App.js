@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Telas
+import WelcomeScreen from './src/components/screens/WelcomeScreen';
+import BottomTabNavigator from './src/components/navigation/BottomTabNavigation';
+import { CartProvider } from './src/components/screens/CartContext';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CartProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Welcome"
+          screenOptions={{ headerShown: false }}
+        >
+          {/* Tela de boas-vindas */}
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+
+          {/* Navegação principal com abas */}
+          <Stack.Screen name="Main" component={BottomTabNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </CartProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
